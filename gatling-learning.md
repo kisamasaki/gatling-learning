@@ -1,3 +1,4 @@
+# Gatling
 - Gatling Recorder
     - ブラウザでのユーザー操作を記録し、それをGatlingのシナリオコードに変換するためのレコーダー機能
 - シナリオコード
@@ -21,3 +22,50 @@
         - "OK"は、テストの実行中に成功したリクエスト数を表す。これは正常に完了し、期待通りの応答が返ってきたリクエストの数
     - KO (失敗)
         - "KO"は、テストの実行中に失敗したリクエスト数を表す。これには様々な原因が含まれる。例えば、タイムアウト、HTTPステータスコードが期待値と異なる、レスポンスの検証に失敗したなどが考えられる。
+- Mavenを使用することでプロジェクトの管理やビルドプロセスの自動化が容易になり、Gatlingを含む依存関係の解決が効果的に行えるため、開発およびテストプロセスが効率的に進むことが期待される
+```scala
+package videogamedb
+
+// Gatlingのコアライブラリを提供。主にシナリオやシミュレーションを作成する際に使用されるクラスやメソッドが含まれている
+import io.gatling.core.Predef._
+
+// GatlingでHTTPテストを作成するためのライブラリを提供。HTTPリクエストやレスポンスに関連するクラスやメソッドが含まれている。
+import io.gatling.http.Predef._
+
+// MyFirstTest という名前のテストクラスを Simulation トレイトを継承して定義。
+// Gatlingのテストは通常、Simulation トレイトを継承して作成
+// Simulation トレイトは、Gatlingフレームワークにおいて性能テストシナリオを定義するためのトレイトです。
+// Gatlingの性能テストは、シミュレーションと呼ばれる単位で組織されます。
+// シミュレーションは、テストの実行方法やシナリオの振る舞いを制御するためのコードを提供
+// Simulation トレイトを使用すると、テストのエントリーポイントである setUp メソッドを実装し、シナリオやテストの設定を行うことが可能
+class MyFirstTest extends Simulation{
+
+  // リクエストがJSON形式のレスポンスを受け入れるように設定
+  val httpProtocol = http.baseUrl("https://videogamedb.uk/api")
+    .acceptHeader("application/json")
+
+  // scenarioメソッドはこのシナリオの名前を "My First Test" に設定
+  // Get all gamesはこのリクエストの名前でこの名前はテストのレポートやログで使用され、リクエストを一意に特定
+  // Gatlingでは、1つのシナリオ内に複数のリクエストを定義することが可能
+  val scn = scenario("My First Test")
+    .exec(http("Get all games")
+    .get("/videogame"))
+
+  // テストの実行方法やシナリオの定義、負荷テストの設定などを指定
+  // setUp メソッドは性能テストの主要な設定を行うためのメソッド。
+  // inject メソッドは、シナリオに対してユーザーの注入方法を指定。
+  // atOnceUsers(1) は、一度に1つのユーザーがテストを開始する設定を示しています。つまり、1つのユーザーがシナリオを実行。
+  // protocols メソッドは、テスト対象のプロトコルに関する設定を指定します。この例では httpProtocol を指定
+  // httpProtocol は事前に定義されたHTTPプロトコルの設定を含んでおり、これにはベースURLやAcceptヘッダーの設定が含まれている
+  setUp(
+    scn.inject(atOnceUsers(1))
+  ).protocols(httpProtocol)
+
+}
+```
+# Scala
+- Scalaにおいて、objectはクラスの特別な種類で、シングルトンオブジェクト（Singleton Object）とも呼ばれる。objectを使用することで、そのクラスの単一のインスタンスが自動的に生成され、そのインスタンスはプログラムの中で唯一のものとなる
+
+
+
+
