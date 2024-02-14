@@ -92,8 +92,13 @@ val scn = scenario("My Scenario")
     - テストのデータ供給源であり、シナリオ内で使用されるデータを提供する。
     - Gatlingでは、CSVファイル、テキストファイル、シーケンシャルな数値などがデータフィーダーとして使用される
 - Gatlingの csv フィーダーは、CSVファイルの最初の行を変数名として扱う。そのため、提供されたCSVデータの場合、最初の行（ヘッダー行）が変数名を定義しているため、この行はデータフィーダーによって自動的にスキップされる。
-
-
+- sbt
+    - sbt（Scala Build Tool）は、Scalaプロジェクトのビルド、テスト、および管理を行うためのツール
+    - GatlingはScalaで書かれたプロジェクトで、ScalaとAkkaを使用して開発されており、sbt（Scala Build Tool）を使用してビルドされる。そのため、Gatlingを実行するためには、Scalaおよびsbtが必要
+- jdk
+    - Gatling自体はScalaで書かれているが、Gatlingがテストする対象のアプリケーションやサービスがJavaで書かれている場合、JDKが必要
+    - Gatlingが実行される際には、JVM（Java Virtual Machine）が必要。JVMはJDKに含まれており、GatlingがScalaコードを実行する際に使用される。
+    - GatlingがHTTPリクエストを送信する際にも、JDKの一部であるJavaの標準ライブラリが使用されることがある。HTTP通信やSSL証明書の処理など、Javaの標準機能を利用している。
 # Scala
 - Scalaにおいて、objectはクラスの特別な種類で、シングルトンオブジェクト（Singleton Object）とも呼ばれる。objectを使用することで、そのクラスの単一のインスタンスが自動的に生成され、そのインスタンスはプログラムの中で唯一のものとなる
 - イテレータ（Iterator）
